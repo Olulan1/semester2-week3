@@ -15,7 +15,7 @@ JOIN screenings as s
 ON t.screening_id = s.screening_id
 JOIN films as f
 ON s.film_id = f.film_id
-WHERE c.customer_id=1
+WHERE c.customer_id=?
 ORDER BY f.title ASC;
 
 --- """

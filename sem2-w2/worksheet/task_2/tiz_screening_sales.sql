@@ -2,9 +2,9 @@
 -- for each screening.
 
 -- The function should return a list of tuples containing (in order):
--- 1. the screening ID
--- 2. the film title
--- 3. the number of tickets sold
+-- 1. the screening ID (s.screening_id)
+-- 2. the film title (f.title)
+-- 3. the number of tickets sold (SUM(tickets per screening) AS TicketsSold)
 
 -- All screenings should be included, even if no tickets were 
 -- sold for that screening.
@@ -13,6 +13,19 @@
 -- from highest to lowest.
 
 -- query = """
+
+
+SELECT s.screening_id, f.title, COUNT(t.ticket_id) as TicketsSold
+FROM customers as c 
+FULL JOIN tickets as t 
+ON c.customer_id=t.customer_id
+FULL JOIN screenings as s
+ON t.screening_id = s.screening_id
+FULL JOIN films as f
+ON s.film_id = f.film_id
+GROUP BY s.screening_id
+ORDER BY TicketsSold DESC;
+
 
 
 
