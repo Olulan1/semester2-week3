@@ -9,7 +9,7 @@ Please do not add any additional code underneath these functions.
 
 import sqlite3
 
-
+conn = sqlite3.connect('tickets.db')
 def customer_tickets(conn, customer_id):
     """
     Return a list of tuples:
@@ -18,7 +18,21 @@ def customer_tickets(conn, customer_id):
     Include only tickets purchased by the given customer_id.
     Order results by film title alphabetically.
     """
+    query ="""
+    SELECT f.title, screen, t.price 
+    FROM customers as c 
+    JOIN tickets as t 
+    ON c.customer_id=t.customer_id
+    JOIN screenings as s
+    ON t.screening_id = s.screening_id
+    JOIN films as f
+    ON s.film_id = f.film_id
+    WHERE c.customer_id=?
+    ORDER BY f.title ASC;
+    """
+    cursor = conn.execute(query, (customer_id,))
     pass
+
 
 
 def screening_sales(conn):
@@ -28,6 +42,9 @@ def screening_sales(conn):
 
     Include all screenings, even if tickets_sold is 0.
     Order results by tickets_sold descending.
+    """
+    query ="""
+    
     """
     pass
 
@@ -41,5 +58,8 @@ def top_customers_by_spend(conn, limit):
     Only include customers who have bought at least one ticket.
     Order by total_spent descending.
     Limit the number of rows returned to `limit`.
+    """
+    query ="""
+    
     """
     pass
