@@ -8,9 +8,13 @@ Please do not add any additional code underneath these functions.
 """
 
 import sqlite3
+import os.path
 
-conn = sqlite3.connect('tickets.db')
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+db_path = os.path.join(BASE_DIR, "tickets.db")
+conn = sqlite3.connect(db_path)
 def customer_tickets(conn, customer_id):
+    list=[]
     """
     Return a list of tuples:
     (film_title, screen, price)
@@ -31,11 +35,13 @@ def customer_tickets(conn, customer_id):
     ORDER BY f.title ASC;
     """
     cursor = conn.execute(query, (customer_id,))
-    pass
-
+    for row in cursor:
+        list.append(row)
+    return list
 
 
 def screening_sales(conn):
+    list=[]
     """
     Return a list of tuples:
     (screening_id, film_title, tickets_sold)
@@ -45,21 +51,22 @@ def screening_sales(conn):
     """
     query ="""
     SELECT s.screening_id, f.title, COUNT(t.ticket_id) as TicketsSold
-    FROM customers as c 
-    FULL JOIN tickets as t 
-    ON c.customer_id=t.customer_id
-    FULL JOIN screenings as s
-    ON t.screening_id = s.screening_id
-    FULL JOIN films as f
+    FROM screenings as s 
+    LEFT JOIN tickets as t 
+    ON s.screening_id = t.screening_id
+    LEFT JOIN films as f
     ON s.film_id = f.film_id
     GROUP BY s.screening_id
     ORDER BY TicketsSold DESC;
     """
     cursor = conn.execute(query)
-    pass
+    for row in cursor:
+        list.append(row)
+    return list
 
 
 def top_customers_by_spend(conn, limit):
+    list=[]
     """
     Return a list of tuples:
     (customer_name, total_spent)
@@ -70,6 +77,19 @@ def top_customers_by_spend(conn, limit):
     Limit the number of rows returned to `limit`.
     """
     query ="""
-    
+    SELECT c.customer_name, SUM(t.price) AS TotalSpent 
+    FROM customers as c 
+    JOIN tickets as t 
+    ON c.customer_id=t.customer_id
+    JOIN screenings as s
+    ON t.screening_id = s.screening_id
+    JOIN films as f
+    ON s.film_id = f.film_id
+    GROUP BY c.customer_name
+    ORDER BY TotalSpent DESC
+    LIMIT ?;
     """
-    pass
+    cursor = conn.execute(query, (limit,))
+    for row in cursor:
+        list.append(row)
+    return list

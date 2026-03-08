@@ -16,12 +16,10 @@
 
 
 SELECT s.screening_id, f.title, COUNT(t.ticket_id) as TicketsSold
-FROM customers as c 
-FULL JOIN tickets as t 
-ON c.customer_id=t.customer_id
-FULL JOIN screenings as s
-ON t.screening_id = s.screening_id
-FULL JOIN films as f
+FROM screenings as s 
+LEFT JOIN tickets as t 
+ON s.screening_id = t.screening_id
+LEFT JOIN films as f
 ON s.film_id = f.film_id
 GROUP BY s.screening_id
 ORDER BY TicketsSold DESC;
