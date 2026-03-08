@@ -2,9 +2,9 @@
 #include <stdio.h>
 
 /*
- * Potrfolio submission
- * Name:
- * ID:
+ * Portfolio submission
+ * Name: Olulani Ogunkolade
+ * ID: 20208920125
  */
 
  int main( void ) {
