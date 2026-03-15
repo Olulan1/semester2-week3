@@ -203,3 +203,9 @@ We should only mix primitive types when we fully understand
 ".2f" two decimal places
 "2.f" two significant figures
 "%f" floats
+
+# (6) Portfolio comment
+
+I learned that if you don't compile definitions and print statements separately, Gradescope can recognize that you did things in the wrong order. WHy......
+
+# (7) 
