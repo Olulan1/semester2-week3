@@ -208,4 +208,19 @@ We should only mix primitive types when we fully understand
 
 I learned that if you don't compile definitions and print statements separately, Gradescope can recognize that you did things in the wrong order. WHy......
 
-# (7) 
+# (7) Arrays in C
+
+int arrayLength = sizeof(b)/sizeof(b[5]); > works for any pos in the array
+
+Scanning/Reading keyboard input requires you to know
+the type that you want ahead of time
+Eg:
+> (int) scanf("\n%d",&n);
+> printf("The value of the int you entered is: %d",n);
+
+Type	                     Size*	          Format Specifier
+long int	                4 or 8 bytes	      %ld
+long long int	            8 bytes	            %lld
+unsigned long int	        4 or 8 bytes	      %lu
+unsigned long long int	  8 bytes	            %llu
+
