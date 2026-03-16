@@ -17,13 +17,20 @@ void factorial(int n) {
    }
 }
 
+int recFactorial(int n) {
+   int x = 1;
+   if (n == 1) {
+      return 1;
+   }
+   return n * recFactorial(n-1);
+}
+
 int main( void ) {
    int f[20];
    int n;
    printf("Enter an int 1-20: ");
    (int) scanf("\n%d",&n);
    printf("The value of the int you entered is: %d\n",n);
-   printf("The factorial of n is: \n");
-   factorial(n);
+   printf("The factorial of %d is: %lu\n",n, recFactorial(n));
    return 0;
 }
